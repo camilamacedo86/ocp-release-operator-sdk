@@ -13,6 +13,8 @@ ENV OPERATOR=/usr/local/bin/helm-operator \
 COPY --from=builder /helm/nginx-operator/watches.yaml ${HOME}/watches.yaml
 COPY --from=builder /helm/nginx-operator/helm-charts/nginx/ ${HOME}/helm-charts/nginx/
 
+RUN ls -la ${HOME}/helm-charts/nginx/
+
 # install operator binary
 COPY --from=builder /nginx-operator ${OPERATOR}
 
