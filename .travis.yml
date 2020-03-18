@@ -110,6 +110,7 @@ jobs:
     # Build and test ansible and test ansible using molecule
     - <<: *test
       env:
+        - CLUSTER=k8s
         - IMAGE_FORMAT=quay.io/camilamacedo86/memcached-operator:awsa
       name: Ansible on Kubernetes
       before_script:
@@ -121,6 +122,7 @@ jobs:
     # Build and test helm
     - <<: *test
       env:
+        - CLUSTER=k8s
         - IMAGE_FORMAT=quay.io/camilamacedo86/memcached-operator:awsh
       name: Helm on Kubernetes
       script: make test-e2e-helm2
