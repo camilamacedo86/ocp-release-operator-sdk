@@ -109,6 +109,8 @@ jobs:
 
     # Build and test ansible and test ansible using molecule
     - <<: *test
+      env:
+        - IMAGE_FORMAT=quay.io/camilamacedo86/memcached-operator:awsa
       name: Ansible on Kubernetes
       before_script:
         - pip3 install --upgrade setuptools pip
@@ -118,6 +120,8 @@ jobs:
 
     # Build and test helm
     - <<: *test
+      env:
+        - IMAGE_FORMAT=quay.io/camilamacedo86/memcached-operator:awsh
       name: Helm on Kubernetes
       script: make test-e2e-helm2
 
