@@ -100,12 +100,12 @@ x_base_steps:
 
 jobs:
   include:
-    # Build and test go
-    - <<: *test
-      name: Go on Kubernetes
-      script:
-      - make test-e2e-go
-      - make test-integration
+#    # Build and test go
+#    - <<: *test
+#      name: Go on Kubernetes
+#      script:
+#      - make test-e2e-go
+#      - make test-integration
 
     # Build and test ansible and test ansible using molecule
     - <<: *test
@@ -114,63 +114,62 @@ jobs:
         - pip3 install --upgrade setuptools pip
         - pip install --user ansible
       script:
-        - make test-e2e-ansible
-        - make test-e2e-ansible-molecule
+        - make test-e2e-ansible2
 
     # Build and test helm
     - <<: *test
       name: Helm on Kubernetes
-      script: make test-e2e-helm
+      script: make test-e2e-helm2
 
-    # Test subcommands
-    - <<: *test
-      name: Subcommands on Kubernetes
-      script: make test-subcommand
-
-    # Run the unit, sanity and markdown tests
-    - stage: test
-      name: Unit, Sanity, and Markdown Tests
-      before_install:
-        - (cd / && go get github.com/mattn/goveralls)
-      script:
-        - make test-sanity test-unit test-markdown
-        - $GOPATH/bin/goveralls -service=travis-ci -coverprofile=coverage.out -repotoken=$COVERALLS_TOKEN
-      after_success: echo 'Tests Passed'
-      after_failure: echo 'Failure in unit, sanity and markdown tests'
-
-    # Build and deploy ansible-operator docker image
-    - <<: *deploy
-      name: Docker image for ansible-operator
-      script:
-        - make image-build-ansible
-        - make image-push-ansible
-
-    # Build and deploy amd64 helm-operator docker image
-    - <<: *deploy
-      name: Docker image for helm-operator (amd64)
-      os: linux
-      script:
-        - make image-build-helm
-        - make image-push-helm
-
-    # Build and deploy ppc64le helm-operator docker image
-    - <<: *deploy
-      name: Docker image for helm-operator (ppc64le)
-      os: linux-ppc64le
-      script:
-        - make image-build-helm
-        - make image-push-helm
-
-    # Build and deploy scorecard-proxy docker image
-    - <<: *deploy
-      name: Docker image for scorecard-proxy
-      script:
-        - make image-build-scorecard-proxy
-        - make image-push-scorecard-proxy
-
-    # Build and deploy helm multi-arch manifest list
-    - <<: *manifest-deploy
-      name: Manifest list for helm-operator
-      script:
-        - make image-push-helm-multiarch
+#    # Test subcommands
+#    - <<: *test
+#      name: Subcommands on Kubernetes
+#      script: make test-subcommand
+#
+#    # Run the unit, sanity and markdown tests
+#    - stage: test
+#      name: Unit, Sanity, and Markdown Tests
+#      before_install:
+#        - (cd / && go get github.com/mattn/goveralls)
+#      script:
+#        - make test-sanity test-unit test-markdown
+#        - $GOPATH/bin/goveralls -service=travis-ci -coverprofile=coverage.out -repotoken=$COVERALLS_TOKEN
+#      after_success: echo 'Tests Passed'
+#      after_failure: echo 'Failure in unit, sanity and markdown tests'
+#
+#    # Build and deploy ansible-operator docker image
+#    - <<: *deploy
+#      name: Docker image for ansible-operator
+#      script:
+#        - make image-build-ansible
+#        - make image-push-ansible
+#
+#    # Build and deploy amd64 helm-operator docker image
+#    - <<: *deploy
+#      name: Docker image for helm-operator (amd64)
+#      os: linux
+#      script:
+#        - make image-build-helm
+#        - make image-push-helm
+#
+#    # Build and deploy ppc64le helm-operator docker image
+#    - <<: *deploy
+#      name: Docker image for helm-operator (ppc64le)
+#      os: linux-ppc64le
+#      script:
+#        - make image-build-helm
+#        - make image-push-helm
+#
+#    # Build and deploy scorecard-proxy docker image
+#    - <<: *deploy
+#      name: Docker image for scorecard-proxy
+#      script:
+#        - make image-build-scorecard-proxy
+#        - make image-push-scorecard-proxy
+#
+#    # Build and deploy helm multi-arch manifest list
+#    - <<: *manifest-deploy
+#      name: Manifest list for helm-operator
+#      script:
+#        - make image-push-helm-multiarch
 
