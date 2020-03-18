@@ -109,18 +109,18 @@ jobs:
 #      - make test-integration
 
     # Build and test ansible and test ansible using molecule
-    - <<: *test
-      name: Ansible on Kubernetes
-      before_script:
-        - pip3 install --upgrade setuptools pip
-        - pip install --user ansible
-      script:
-        - make test-e2e-ansible2
+#    - <<: *test
+#      name: Ansible on Kubernetes
+#      before_script:
+#        - pip3 install --upgrade setuptools pip
+#        - pip install --user ansible
+#      script:
+#        - make test-e2e-ansible2
 
     # Build and test helm
     - <<: *test
       name: Helm on Kubernetes
-      script: make test-e2e-helm2
+      script: make test-e2e-helm
 
 #    # Test subcommands
 #    - <<: *test
